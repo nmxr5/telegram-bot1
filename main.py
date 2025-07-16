@@ -1,4 +1,6 @@
 import telebot
+from keep_alive import keep_alive
+keep_alive()
 
 TOKEN = "8090368961:AAHLbisTtk844DgZm1qv-finteOELWeaSF4"
 CHANNEL_ID = -1002650173547  # غيّريه لرقم قناتك
