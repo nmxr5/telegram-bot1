@@ -1,3 +1,6 @@
+from keep_alive import keep_alive
+keep_alive()
+
 import telebot
 
 TOKEN = "8090368961:AAHLbisTtk844DgZm1qv-finteOELWeaSF4"
