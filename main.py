@@ -84,4 +84,13 @@ def store_input(message):
     bot.send_message(message.chat.id, f"تم حفظ {field} ✅")
 
 if __name__ == "__main__":
- bot.polling()
+ import os
+
+# رابط السيرفر تبعك في Render (بدليه برابطك الفعلي)
+WEBHOOK_URL = "https://telegram-bot1.onrender.com/"  # تأكدي من / في النهاية
+
+# إزالة أي ويب هوك سابق (احتياطي)
+bot.remove_webhook()
+
+# تعيين ويب هوك جديد
+bot.set_webhook(url=WEBHOOK_URL)
