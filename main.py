@@ -90,7 +90,7 @@ def webhook():
     bot.process_new_updates([update])
     return "OK", 200
 
-if __name__ == "__main_S_":
+if __name__ == "__main__":
     import os
 
     bot.remove_webhook()
