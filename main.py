@@ -5,7 +5,7 @@ TOKEN = "8090368961:AAHLbisTtk844DgZm1qv-finteOELWeaSF4"
 CHANNEL_ID = -1002650173547  # غيريه لرقم قناتك
 
 bot = telebot.TeleBot(TOKEN)
-app = Flask(_name_)
+app = Flask(__name__)
 
 WELCOME_MESSAGE = """\
 مرحبًا بك في تلاوات نجد،
@@ -90,7 +90,7 @@ def webhook():
     bot.process_new_updates([update])
     return "OK", 200
 
-if __name__ == "__main__":
+if __name__ == "__main_S_":
     import os
 
     bot.remove_webhook()
