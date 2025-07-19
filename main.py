@@ -1,10 +1,11 @@
-from flask import Flask, request
 import telebot
+from flask import Flask, request
+
 TOKEN = "8090368961:AAHLbisTtk844DgZm1qv-finteOELWeaSF4"
-CHANNEL_ID = -1002650173547  # غيّريه لرقم قناتك
+CHANNEL_ID = -1002650173547  # غيريه لرقم قناتك
 
 bot = telebot.TeleBot(TOKEN)
-app = Flask(__name__)
+app = Flask(_name_)
 
 WELCOME_MESSAGE = """\
 مرحبًا بك في تلاوات نجد،
@@ -82,19 +83,18 @@ def store_input(message):
 
 # ---------------------- Webhook إعداد ------------------------
 
-WEBHOOK_URL = "https://telegram-bot1.onrender.com/"  # غيّريه لرابط موقعك الفعلي
-
-@app.route('/', methods=['POST'])
+@app.route(f'/{TOKEN}', methods=['POST'])
 def webhook():
-    update = telebot.types.Update.de_json(request.stream.read().decode("utf-8"))
+    json_str = request.get_data().decode('utf-8')
+    update = telebot.types.Update.de_json(json_str)
     bot.process_new_updates([update])
     return "OK", 200
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     import os
 
     bot.remove_webhook()
-    bot.set_webhook(url=webhook)
+    bot.set_webhook(url=f"https://telegram-bot1-7xo8.onrender.com/{TOKEN}")
 
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
