@@ -1,6 +1,5 @@
-import telebot
 from flask import Flask, request
-
+import telebot
 TOKEN = "8090368961:AAHLbisTtk844DgZm1qv-finteOELWeaSF4"
 CHANNEL_ID = -1002650173547  # غيّريه لرقم قناتك
 
@@ -95,7 +94,7 @@ if __name__ == "__main__":
     import os
 
     bot.remove_webhook()
-    bot.set_webhook(url=WEBHOOK_URL)
+    bot.set_webhook(url=webhook)
 
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
