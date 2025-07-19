@@ -1,12 +1,11 @@
-from keep_alive import keep_alive
-keep_alive()
-
 import telebot
+from flask import Flask, request
 
 TOKEN = "8090368961:AAHLbisTtk844DgZm1qv-finteOELWeaSF4"
 CHANNEL_ID = -1002650173547  # غيّريه لرقم قناتك
 
 bot = telebot.TeleBot(TOKEN)
+app = Flask(_name_)
 
 WELCOME_MESSAGE = """\
 مرحبًا بك في تلاوات نجد،
@@ -22,7 +21,7 @@ WELCOME_MESSAGE = """\
 بمساهمتكم، يمتد صوت القرآن وتتردد آياته، ويكتب لكم أجر لا ينقطع إن شاء الله
 """
 
-user_data = {}  # لتخزين بيانات كل مستخدم مؤقتًا
+user_data = {}
 waiting_for = {}
 
 @bot.message_handler(commands=['start'])
@@ -69,7 +68,6 @@ def send_summary(message):
     bot.send_message(CHANNEL_ID, summary, parse_mode="Markdown")
     bot.send_message(chat_id, "تم إرسال المشاركة، شكرًا لك وجزاك الله خيرًا 🌷")
 
-    # مسح البيانات بعد الإرسال
     user_data.pop(user_id, None)
 
 @bot.message_handler(func=lambda msg: msg.chat.id in waiting_for)
@@ -83,14 +81,21 @@ def store_input(message):
     user_data[user_id][field] = message.text
     bot.send_message(message.chat.id, f"تم حفظ {field} ✅")
 
-if __name__ == "__main__":
- import os
+# ---------------------- Webhook إعداد ------------------------
 
-# رابط السيرفر تبعك في Render (بدليه برابطك الفعلي)
-WEBHOOK_URL = "https://telegram-bot1.onrender.com/"  # تأكدي من / في النهاية
+WEBHOOK_URL = "https://telegram-bot1.onrender.com/"  # غيّريه لرابط موقعك الفعلي
 
-# إزالة أي ويب هوك سابق (احتياطي)
-bot.remove_webhook()
+@app.route('/', methods=['POST'])
+def webhook():
+    update = telebot.types.Update.de_json(request.stream.read().decode("utf-8"))
+    bot.process_new_updates([update])
+    return "OK", 200
 
-# تعيين ويب هوك جديد
-bot.set_webhook(url=WEBHOOK_URL)
+if _name_ == "_main_":
+    import os
+
+    bot.remove_webhook()
+    bot.set_webhook(url=WEBHOOK_URL)
+
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
